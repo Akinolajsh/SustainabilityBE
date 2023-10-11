@@ -4,11 +4,14 @@ import student from "./Router/studentRouter";
 import bag from "./Router/bagHistoryRouter";
 import fee from "./Router/feeHistoryRouter";
 import mongoose from "mongoose";
+import env from "dotenv"
+import { Db } from "./config/dataBase";
+env.config()
 
-const port: number = 2054;
+
+const port: number = parseInt(process.env.PORT! );
 const app: Application = express();
 
-const url: string = "mongodb://0.0.0.0:27017/SustanabilityDB";
 
 app.use(cors());
 app.use(express.json());
@@ -27,8 +30,7 @@ app.get("/api", (req: Request, res: Response) => {
   }
 });
 
-app.listen(port, () => {
-  mongoose.connect(url).then(() => {
+app.listen(process.env.PORT || port, () => {
     console.log("mongodb listening on🚀🚀🚀", port);
-  });
+  Db()
 });
